@@ -1,0 +1,14 @@
+[package]
+edition = "2024"
+name = "sol-protos"
+repository = "https://github.com/gattaca-external/solana-protos"
+version = "0.0.1"
+
+[dependencies]
+prost = "0.14.4"
+prost-types = "0.14.4"
+tonic = { version = "0.14.6", features = ["tls-webpki-roots"] }
+tonic-prost = "0.14.6"
+
+[build-dependencies]
+tonic-prost-build = "0.14.6"

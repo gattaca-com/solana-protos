@@ -1,0 +1,32 @@
+name: Protos
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate protos
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Buf
+        uses: bufbuild/buf-action@v1
+        with:
+          setup_only: true
+
+      - name: Validate protobuf schemas
+        run: buf build protos --error-format github-actions
+
+      - name: Check supported subset compatibility with jito-labs/mev-protos
+        run: |
+          buf breaking protos \
+            --against "https://github.com/jito-labs/mev-protos.git#branch=master" \
+            --error-format github-actions

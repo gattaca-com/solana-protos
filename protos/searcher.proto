@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package searcher;
+
+import "bundle.proto";
+import "packet.proto";
+
+message SlotList {
+  repeated uint64 slots = 1;
+}
+
+message ConnectedLeadersResponse {
+  map<string /* validator pubkey */, SlotList> connected_validators = 1;
+}
+
+message SendBundleRequest {
+  bundle.Bundle bundle = 1;
+}
+
+message SendBundleResponse {
+  string uuid = 1;
+}
+
+message SendTransactionRequest {
+  packet.Packet transaction = 1;
+}
+
+message SendTransactionResponse {}
+
+message ConnectedLeadersRequest {}
+
+message ConnectedLeadersRegionedRequest {
+  repeated string regions = 1;
+}
+
+message ConnectedLeadersRegionedResponse {
+  map<string /* region */, ConnectedLeadersResponse> connected_validators = 1;
+}
+
+message GetTipAccountsRequest {}
+
+message GetTipAccountsResponse {
+  repeated string accounts = 1;
+}
+
+message GetRegionsRequest {}
+
+message GetRegionsResponse {
+  string current_region = 1;
+  repeated string available_regions = 2;
+}
+
+service SearcherService {
+  rpc SendBundle (SendBundleRequest) returns (SendBundleResponse) {}
+  rpc SendTransaction (SendTransactionRequest) returns (SendTransactionResponse) {}
+  rpc GetConnectedLeaders (ConnectedLeadersRequest) returns (ConnectedLeadersResponse) {}
+  rpc GetConnectedLeadersRegioned (ConnectedLeadersRegionedRequest) returns (ConnectedLeadersRegionedResponse) {}
+  rpc GetTipAccounts (GetTipAccountsRequest) returns (GetTipAccountsResponse) {}
+  rpc GetRegions (GetRegionsRequest) returns (GetRegionsResponse) {}
+}
