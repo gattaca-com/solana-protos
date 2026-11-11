@@ -1,7 +1,7 @@
 [package]
 edition = "2024"
 name = "sol-protos"
-repository = "https://github.com/gattaca-external/solana-protos"
+repository = "https://github.com/gattaca-com/solana-protos"
 version = "0.0.1"
 
 [dependencies]
@@ -12,3 +12,11 @@ tonic-prost = "0.14.6"
 
 [build-dependencies]
 tonic-prost-build = "0.14.6"
+
+[dev-dependencies]
+base64 = "0.22"
+solana-keypair = "4"
+solana-signer = "4"
+tokio = { version = "1", features = ["macros", "rt"] }
+# selects the rustls crypto provider the example needs for TLS
+tonic = { version = "0.14.6", features = ["tls-ring"] }
